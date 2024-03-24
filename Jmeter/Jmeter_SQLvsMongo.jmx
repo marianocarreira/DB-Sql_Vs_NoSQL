@@ -1,0 +1,932 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jmeterTestPlan version="1.2" properties="5.0" jmeter="5.6.3">
+  <hashTree>
+    <TestPlan guiclass="TestPlanGui" testclass="TestPlan" testname="Test Plan">
+      <elementProp name="TestPlan.user_defined_variables" elementType="Arguments" guiclass="ArgumentsPanel" testclass="Arguments" testname="User Defined Variables">
+        <collectionProp name="Arguments.arguments"/>
+      </elementProp>
+      <stringProp name="TestPlan.user_define_classpath">C:\Users\maria\OneDrive\Escritorio\New folder\mssql-jdbc-8.4.1.jre8.jar,C:\Program Files (Portable)\apache-jmeter-5.6.3\lib\bson-3.12.14-javadoc.jar</stringProp>
+    </TestPlan>
+    <hashTree>
+      <JDBCDataSource guiclass="TestBeanGUI" testclass="JDBCDataSource" testname="JDBC Connection Configuration">
+        <boolProp name="autocommit">true</boolProp>
+        <stringProp name="checkQuery"></stringProp>
+        <stringProp name="connectionAge">5000</stringProp>
+        <stringProp name="connectionProperties"></stringProp>
+        <stringProp name="dataSource">sqlserver</stringProp>
+        <stringProp name="dbUrl">jdbc:sqlserver://localhost:1433;databaseName=StackOverflow2010;encrypt=false;</stringProp>
+        <stringProp name="driver">com.microsoft.sqlserver.jdbc.SQLServerDriver</stringProp>
+        <stringProp name="initQuery">delete posts where id &lt; 0</stringProp>
+        <boolProp name="keepAlive">true</boolProp>
+        <stringProp name="password">elAdmin</stringProp>
+        <stringProp name="poolMax">0</stringProp>
+        <boolProp name="preinit">false</boolProp>
+        <stringProp name="timeout">10000</stringProp>
+        <stringProp name="transactionIsolation">DEFAULT</stringProp>
+        <stringProp name="trimInterval">60000</stringProp>
+        <stringProp name="username">sa</stringProp>
+      </JDBCDataSource>
+      <hashTree/>
+      <ResultCollector guiclass="SummaryReport" testclass="ResultCollector" testname="Summary Report">
+        <boolProp name="ResultCollector.error_logging">false</boolProp>
+        <objProp>
+          <name>saveConfig</name>
+          <value class="SampleSaveConfiguration">
+            <time>true</time>
+            <latency>true</latency>
+            <timestamp>true</timestamp>
+            <success>true</success>
+            <label>true</label>
+            <code>true</code>
+            <message>true</message>
+            <threadName>true</threadName>
+            <dataType>true</dataType>
+            <encoding>false</encoding>
+            <assertions>false</assertions>
+            <subresults>true</subresults>
+            <responseData>false</responseData>
+            <samplerData>false</samplerData>
+            <xml>false</xml>
+            <fieldNames>true</fieldNames>
+            <responseHeaders>false</responseHeaders>
+            <requestHeaders>false</requestHeaders>
+            <responseDataOnError>false</responseDataOnError>
+            <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+            <assertionsResultsToSave>0</assertionsResultsToSave>
+            <bytes>true</bytes>
+            <sentBytes>true</sentBytes>
+            <url>true</url>
+            <threadCounts>true</threadCounts>
+            <idleTime>true</idleTime>
+            <connectTime>true</connectTime>
+          </value>
+        </objProp>
+        <stringProp name="filename"></stringProp>
+        <boolProp name="ResultCollector.success_only_logging">true</boolProp>
+        <boolProp name="useGroupName">true</boolProp>
+      </ResultCollector>
+      <hashTree/>
+      <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree">
+        <boolProp name="ResultCollector.error_logging">false</boolProp>
+        <objProp>
+          <name>saveConfig</name>
+          <value class="SampleSaveConfiguration">
+            <time>true</time>
+            <latency>true</latency>
+            <timestamp>true</timestamp>
+            <success>true</success>
+            <label>true</label>
+            <code>true</code>
+            <message>true</message>
+            <threadName>true</threadName>
+            <dataType>true</dataType>
+            <encoding>false</encoding>
+            <assertions>true</assertions>
+            <subresults>true</subresults>
+            <responseData>false</responseData>
+            <samplerData>false</samplerData>
+            <xml>false</xml>
+            <fieldNames>true</fieldNames>
+            <responseHeaders>false</responseHeaders>
+            <requestHeaders>false</requestHeaders>
+            <responseDataOnError>false</responseDataOnError>
+            <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+            <assertionsResultsToSave>0</assertionsResultsToSave>
+            <bytes>true</bytes>
+            <sentBytes>true</sentBytes>
+            <url>true</url>
+            <threadCounts>true</threadCounts>
+            <idleTime>true</idleTime>
+            <connectTime>true</connectTime>
+          </value>
+        </objProp>
+        <stringProp name="filename"></stringProp>
+      </ResultCollector>
+      <hashTree/>
+      <JSR223PreProcessor guiclass="TestBeanGUI" testclass="JSR223PreProcessor" testname="Mongo Connection">
+        <stringProp name="cacheKey">false</stringProp>
+        <stringProp name="filename"></stringProp>
+        <stringProp name="parameters"></stringProp>
+        <stringProp name="script">import com.mongodb.MongoClient;
+import com.mongodb.MongoCredential;
+import com.mongodb.ServerAddress; // Import ServerAddress class
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.MongoIterable;
+import com.mongodb.client.MongoCursor;
+import org.bson.Document;
+import com.mongodb.client.MongoCollection
+import com.mongodb.client.model.Filters
+
+// MongoDB connection parameters
+
+String host = &quot;localhost&quot;;
+int port = 27017;
+String dbName = &quot;StackOverflow2010&quot;;
+String collectionName = &quot;posts&quot;;
+String username = &quot;admin&quot;;
+String password = &quot;admin&quot;;
+int batchSize = 1000; // Adjust batch size as needed
+
+// Create MongoCredential object
+MongoCredential credential = MongoCredential.createCredential(username, dbName, password.toCharArray());
+
+// Establish connection to MongoDB with credential
+MongoClient mongoClient = new MongoClient(new ServerAddress(host, port), Collections.singletonList(credential));
+MongoDatabase database = mongoClient.getDatabase(dbName);
+MongoCollection&lt;Document&gt; collection = database.getCollection(collectionName);
+
+vars.putObject(&quot;postsCollection&quot;, collection);
+
+def filter = Filters.lt(&quot;id&quot;, 0);
+// Perform delete operation
+def deleteResult = collection.deleteMany(filter);
+
+return &quot;Connected&quot;;</stringProp>
+        <stringProp name="scriptLanguage">groovy</stringProp>
+      </JSR223PreProcessor>
+      <hashTree/>
+      <ThreadGroup guiclass="ThreadGroupGui" testclass="ThreadGroup" testname="Selects">
+        <intProp name="ThreadGroup.num_threads">1</intProp>
+        <intProp name="ThreadGroup.ramp_time">1</intProp>
+        <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
+        <stringProp name="ThreadGroup.on_sample_error">stoptestnow</stringProp>
+        <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller">
+          <stringProp name="LoopController.loops">5</stringProp>
+          <boolProp name="LoopController.continue_forever">false</boolProp>
+        </elementProp>
+      </ThreadGroup>
+      <hashTree>
+        <OnceOnlyController guiclass="OnceOnlyControllerGui" testclass="OnceOnlyController" testname="Once Only Controller"/>
+        <hashTree>
+          <JDBCSampler guiclass="TestBeanGUI" testclass="JDBCSampler" testname="INSERT SQL - 500000 Posts">
+            <stringProp name="dataSource">sqlserver</stringProp>
+            <stringProp name="queryType">Update Statement</stringProp>
+            <stringProp name="query">-- Generate 1,000,000 rows of random data and insert into the &quot;Posts&quot; table
+SET IDENTITY_INSERT Posts ON
+DECLARE @counter INT = 1
+DECLARE @maxRows INT = 500000
+
+WHILE @counter &lt;= @maxRows
+BEGIN
+    INSERT INTO Posts (
+        Id,
+        AcceptedAnswerId,
+        AnswerCount,
+        Body,
+        ClosedDate,
+        CommentCount,
+        CommunityOwnedDate,
+        CreationDate,
+        FavoriteCount,
+        LastActivityDate,
+        LastEditDate,
+        LastEditorDisplayName,
+        LastEditorUserId,
+        OwnerUserId,
+        ParentId,
+        PostTypeId,
+        Score,
+        Tags,
+        Title,
+        ViewCount
+    )
+    VALUES (
+        -@counter,
+        ABS(CHECKSUM(NEWID())) % 1000000 + 1, -- Random value between 1 and 1,000,000
+        ABS(CHECKSUM(NEWID())) % 100,
+        CAST(NEWID() AS NVARCHAR(MAX)),
+        GETDATE(), -- ClosedDate can be null
+        ABS(CHECKSUM(NEWID())) % 100,
+        NULL, -- CommunityOwnedDate can be null
+        GETDATE(), -- Current date
+        ABS(CHECKSUM(NEWID())) % 100,
+        GETDATE(), -- Current date
+        GETDATE(), -- Current date
+        LEFT(CONVERT(VARCHAR(255), NEWID()), 30), -- LastEditorDisplayName can be null
+        null, 
+        11,
+        ABS(CHECKSUM(NEWID())) % 1000000 + 1, -- Random value between 1 and 1,000,000
+        ABS(CHECKSUM(NEWID())) % 10, -- Random value between 0 and 9
+        ABS(CHECKSUM(NEWID())) % 100,
+        CAST(NEWID() AS NVARCHAR(300)),
+        CAST(NEWID() AS NVARCHAR(500)),
+        ABS(CHECKSUM(NEWID())) % 1000000
+    )
+
+    SET @counter = @counter + 1
+END
+SET IDENTITY_INSERT Posts OFF</stringProp>
+            <stringProp name="queryArguments"></stringProp>
+            <stringProp name="queryArgumentsTypes"></stringProp>
+            <stringProp name="variableNames"></stringProp>
+            <stringProp name="resultVariable">SQLINSERTRESULT</stringProp>
+            <stringProp name="queryTimeout"></stringProp>
+            <stringProp name="resultSetMaxRows"></stringProp>
+            <stringProp name="resultSetHandler">Store as String</stringProp>
+          </JDBCSampler>
+          <hashTree/>
+          <JDBCSampler guiclass="TestBeanGUI" testclass="JDBCSampler" testname="UPDATE SQL - 500000 Posts">
+            <stringProp name="dataSource">sqlserver</stringProp>
+            <stringProp name="queryType">Update Statement</stringProp>
+            <stringProp name="query">UPDATE	POSTS 
+SET 		lastEditorUserId = 11 
+WHERE	lastEditorUserId IS NULL 
+	AND 	ownerUserId = 11 
+	AND 	id &lt; 0</stringProp>
+            <stringProp name="queryArguments"></stringProp>
+            <stringProp name="queryArgumentsTypes"></stringProp>
+            <stringProp name="variableNames"></stringProp>
+            <stringProp name="resultVariable"></stringProp>
+            <stringProp name="queryTimeout"></stringProp>
+            <stringProp name="resultSetMaxRows"></stringProp>
+            <stringProp name="resultSetHandler">Count Records</stringProp>
+          </JDBCSampler>
+          <hashTree/>
+          <JDBCSampler guiclass="TestBeanGUI" testclass="JDBCSampler" testname="DELETE SQL - 500000 Posts">
+            <stringProp name="dataSource">sqlserver</stringProp>
+            <stringProp name="queryType">Prepared Update Statement</stringProp>
+            <stringProp name="query">DELETE	POSTS
+WHERE	id &lt; 0</stringProp>
+            <stringProp name="queryArguments"></stringProp>
+            <stringProp name="queryArgumentsTypes"></stringProp>
+            <stringProp name="variableNames"></stringProp>
+            <stringProp name="resultVariable"></stringProp>
+            <stringProp name="queryTimeout"></stringProp>
+            <stringProp name="resultSetMaxRows"></stringProp>
+            <stringProp name="resultSetHandler">Count Records</stringProp>
+          </JDBCSampler>
+          <hashTree/>
+          <ResultCollector guiclass="RespTimeGraphVisualizer" testclass="ResultCollector" testname="Response Time Graph">
+            <boolProp name="ResultCollector.error_logging">false</boolProp>
+            <objProp>
+              <name>saveConfig</name>
+              <value class="SampleSaveConfiguration">
+                <time>true</time>
+                <latency>true</latency>
+                <timestamp>true</timestamp>
+                <success>true</success>
+                <label>true</label>
+                <code>true</code>
+                <message>true</message>
+                <threadName>true</threadName>
+                <dataType>true</dataType>
+                <encoding>false</encoding>
+                <assertions>true</assertions>
+                <subresults>true</subresults>
+                <responseData>false</responseData>
+                <samplerData>false</samplerData>
+                <xml>false</xml>
+                <fieldNames>true</fieldNames>
+                <responseHeaders>false</responseHeaders>
+                <requestHeaders>false</requestHeaders>
+                <responseDataOnError>false</responseDataOnError>
+                <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+                <assertionsResultsToSave>0</assertionsResultsToSave>
+                <bytes>true</bytes>
+                <sentBytes>true</sentBytes>
+                <url>true</url>
+                <threadCounts>true</threadCounts>
+                <idleTime>true</idleTime>
+                <connectTime>true</connectTime>
+              </value>
+            </objProp>
+            <stringProp name="filename"></stringProp>
+          </ResultCollector>
+          <hashTree/>
+          <ResultCollector guiclass="StatVisualizer" testclass="ResultCollector" testname="Aggregate Report">
+            <boolProp name="ResultCollector.error_logging">false</boolProp>
+            <objProp>
+              <name>saveConfig</name>
+              <value class="SampleSaveConfiguration">
+                <time>true</time>
+                <latency>true</latency>
+                <timestamp>true</timestamp>
+                <success>true</success>
+                <label>true</label>
+                <code>true</code>
+                <message>true</message>
+                <threadName>true</threadName>
+                <dataType>true</dataType>
+                <encoding>false</encoding>
+                <assertions>true</assertions>
+                <subresults>true</subresults>
+                <responseData>false</responseData>
+                <samplerData>false</samplerData>
+                <xml>false</xml>
+                <fieldNames>true</fieldNames>
+                <responseHeaders>false</responseHeaders>
+                <requestHeaders>false</requestHeaders>
+                <responseDataOnError>false</responseDataOnError>
+                <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+                <assertionsResultsToSave>0</assertionsResultsToSave>
+                <bytes>true</bytes>
+                <sentBytes>true</sentBytes>
+                <url>true</url>
+                <threadCounts>true</threadCounts>
+                <idleTime>true</idleTime>
+                <connectTime>true</connectTime>
+              </value>
+            </objProp>
+            <stringProp name="filename"></stringProp>
+          </ResultCollector>
+          <hashTree/>
+          <ResultCollector guiclass="StatGraphVisualizer" testclass="ResultCollector" testname="Aggregate Graph">
+            <boolProp name="ResultCollector.error_logging">false</boolProp>
+            <objProp>
+              <name>saveConfig</name>
+              <value class="SampleSaveConfiguration">
+                <time>true</time>
+                <latency>true</latency>
+                <timestamp>true</timestamp>
+                <success>true</success>
+                <label>true</label>
+                <code>true</code>
+                <message>true</message>
+                <threadName>true</threadName>
+                <dataType>true</dataType>
+                <encoding>false</encoding>
+                <assertions>true</assertions>
+                <subresults>true</subresults>
+                <responseData>false</responseData>
+                <samplerData>false</samplerData>
+                <xml>false</xml>
+                <fieldNames>true</fieldNames>
+                <responseHeaders>false</responseHeaders>
+                <requestHeaders>false</requestHeaders>
+                <responseDataOnError>false</responseDataOnError>
+                <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+                <assertionsResultsToSave>0</assertionsResultsToSave>
+                <bytes>true</bytes>
+                <sentBytes>true</sentBytes>
+                <url>true</url>
+                <threadCounts>true</threadCounts>
+                <idleTime>true</idleTime>
+                <connectTime>true</connectTime>
+              </value>
+            </objProp>
+            <stringProp name="filename"></stringProp>
+          </ResultCollector>
+          <hashTree/>
+        </hashTree>
+        <OnceOnlyController guiclass="OnceOnlyControllerGui" testclass="OnceOnlyController" testname="Once Only Controller"/>
+        <hashTree>
+          <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="INSERT MONGO - 500000  Posts">
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="cacheKey">true</stringProp>
+            <stringProp name="script">import com.mongodb.client.MongoCollection
+import org.bson.Document
+import org.bson.types.ObjectId
+import java.util.concurrent.ThreadLocalRandom
+
+MongoCollection&lt;Document&gt; collection = vars.getObject(&quot;postsCollection&quot;);
+
+// Generate and insert random data into MongoDB
+def generateRandomDate() {
+    def offset = ThreadLocalRandom.current().nextLong(946684800000, System.currentTimeMillis())
+    return new Date(offset)
+}
+
+int rowCount = 500000
+
+for (int i = 0; i &lt; rowCount; i++) {
+    def document = new Document([
+        &quot;_id&quot;: new ObjectId(),
+        &quot;id&quot;: -(ThreadLocalRandom.current().nextInt(1000000, 9999999)),
+        &quot;acceptedAnswerId&quot;: 0,
+        &quot;answerCount&quot;: 0,
+        &quot;body&quot;: &quot;&quot;,
+        &quot;closedDate&quot;: null,
+        &quot;commentCount&quot;: 0,
+        &quot;communityOwnedDate&quot;: null,
+        &quot;creationDate&quot;: generateRandomDate(),
+        &quot;favoriteCount&quot;: 0,
+        &quot;lastActivityDate&quot;: generateRandomDate(),
+        &quot;lastEditDate&quot;: generateRandomDate(),
+        &quot;lastEditorDisplayName&quot;: null,
+        &quot;lastEditorUserId&quot;: null,
+        &quot;ownerUserId&quot;: 11,
+        &quot;parentId&quot;: 0,
+        &quot;postTypeId&quot;: 3,
+        &quot;score&quot;: ThreadLocalRandom.current().nextInt(0, 100),
+        &quot;tags&quot;: null,
+        &quot;title&quot;: null,
+        &quot;viewCount&quot;: 0,
+        &quot;postType&quot;: new Document([
+            &quot;id&quot;: 3,
+            &quot;type&quot;: &quot;Wiki&quot;
+        ]),
+        &quot;user&quot;: new Document([
+            &quot;aboutMe&quot;: &quot;&lt;p&gt;Hi, I&apos;m not really a person.&lt;/p&gt;&quot;,
+            &quot;accountId&quot;: -1,
+            &quot;age&quot;: null,
+            &quot;creationDate&quot;: generateRandomDate(),
+            &quot;displayName&quot;: &quot;Community&quot;,
+            &quot;downVotes&quot;: ThreadLocalRandom.current().nextInt(0, 1000000),
+            &quot;emailHash&quot;: null,
+            &quot;id&quot;: -1,
+            &quot;lastAccessDate&quot;: generateRandomDate(),
+            &quot;location&quot;: &quot;on the server farm&quot;,
+            &quot;reputation&quot;: ThreadLocalRandom.current().nextInt(0, 1000000),
+            &quot;upVotes&quot;: ThreadLocalRandom.current().nextInt(0, 1000000),
+            &quot;views&quot;: ThreadLocalRandom.current().nextInt(0, 1000000),
+            &quot;websiteUrl&quot;: &quot;http://meta.stackexchange.com/&quot;
+        ])
+    ])
+
+    collection.insertOne(document)
+}
+</stringProp>
+          </JSR223Sampler>
+          <hashTree/>
+          <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="UPDATE MONGO - 500000 Posts">
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="cacheKey">true</stringProp>
+            <stringProp name="script">import com.mongodb.client.MongoCollection
+import com.mongodb.client.model.Filters
+import com.mongodb.client.model.Updates
+import org.bson.Document
+import org.bson.conversions.Bson;
+
+MongoCollection&lt;Document&gt; collection = vars.getObject(&quot;postsCollection&quot;);
+
+// Define a filter to match documents where lastEditorUserId is null and ownerId is equal to 11
+Bson filter = Filters.and(
+    Filters.eq(&quot;lastEditorUserId&quot;, null),
+    Filters.eq(&quot;ownerUserId&quot;, 11),
+    Filters.lt(&quot;id&quot;, 0)
+);
+
+// Define an update to set a new value for lastEditorUserId
+Bson update = Updates.set(&quot;lastEditorUserId&quot;, 11);
+
+// Perform update operation
+def updateResult = collection.updateMany(filter, update);</stringProp>
+          </JSR223Sampler>
+          <hashTree/>
+          <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="DELETE MONGO - 500000 Posts ">
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="cacheKey">true</stringProp>
+            <stringProp name="script">import com.mongodb.client.MongoCollection
+import org.bson.Document
+import com.mongodb.client.model.Filters
+
+MongoCollection&lt;Document&gt; collection = vars.getObject(&quot;postsCollection&quot;);
+
+def filter = Filters.lt(&quot;id&quot;, 0);
+
+// Perform delete operation
+def deleteResult = collection.deleteMany(filter);
+</stringProp>
+          </JSR223Sampler>
+          <hashTree/>
+          <ResultCollector guiclass="RespTimeGraphVisualizer" testclass="ResultCollector" testname="Response Time Graph">
+            <boolProp name="ResultCollector.error_logging">false</boolProp>
+            <objProp>
+              <name>saveConfig</name>
+              <value class="SampleSaveConfiguration">
+                <time>true</time>
+                <latency>true</latency>
+                <timestamp>true</timestamp>
+                <success>true</success>
+                <label>true</label>
+                <code>true</code>
+                <message>true</message>
+                <threadName>true</threadName>
+                <dataType>true</dataType>
+                <encoding>false</encoding>
+                <assertions>true</assertions>
+                <subresults>true</subresults>
+                <responseData>false</responseData>
+                <samplerData>false</samplerData>
+                <xml>false</xml>
+                <fieldNames>true</fieldNames>
+                <responseHeaders>false</responseHeaders>
+                <requestHeaders>false</requestHeaders>
+                <responseDataOnError>false</responseDataOnError>
+                <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+                <assertionsResultsToSave>0</assertionsResultsToSave>
+                <bytes>true</bytes>
+                <sentBytes>true</sentBytes>
+                <url>true</url>
+                <threadCounts>true</threadCounts>
+                <idleTime>true</idleTime>
+                <connectTime>true</connectTime>
+              </value>
+            </objProp>
+            <stringProp name="filename"></stringProp>
+          </ResultCollector>
+          <hashTree/>
+          <ResultCollector guiclass="StatGraphVisualizer" testclass="ResultCollector" testname="Aggregate Graph">
+            <boolProp name="ResultCollector.error_logging">false</boolProp>
+            <objProp>
+              <name>saveConfig</name>
+              <value class="SampleSaveConfiguration">
+                <time>true</time>
+                <latency>true</latency>
+                <timestamp>true</timestamp>
+                <success>true</success>
+                <label>true</label>
+                <code>true</code>
+                <message>true</message>
+                <threadName>true</threadName>
+                <dataType>true</dataType>
+                <encoding>false</encoding>
+                <assertions>true</assertions>
+                <subresults>true</subresults>
+                <responseData>false</responseData>
+                <samplerData>false</samplerData>
+                <xml>false</xml>
+                <fieldNames>true</fieldNames>
+                <responseHeaders>false</responseHeaders>
+                <requestHeaders>false</requestHeaders>
+                <responseDataOnError>false</responseDataOnError>
+                <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+                <assertionsResultsToSave>0</assertionsResultsToSave>
+                <bytes>true</bytes>
+                <sentBytes>true</sentBytes>
+                <url>true</url>
+                <threadCounts>true</threadCounts>
+                <idleTime>true</idleTime>
+                <connectTime>true</connectTime>
+              </value>
+            </objProp>
+            <stringProp name="filename"></stringProp>
+          </ResultCollector>
+          <hashTree/>
+          <ResultCollector guiclass="StatGraphVisualizer" testclass="ResultCollector" testname="Aggregate Graph">
+            <boolProp name="ResultCollector.error_logging">false</boolProp>
+            <objProp>
+              <name>saveConfig</name>
+              <value class="SampleSaveConfiguration">
+                <time>true</time>
+                <latency>true</latency>
+                <timestamp>true</timestamp>
+                <success>true</success>
+                <label>true</label>
+                <code>true</code>
+                <message>true</message>
+                <threadName>true</threadName>
+                <dataType>true</dataType>
+                <encoding>false</encoding>
+                <assertions>true</assertions>
+                <subresults>true</subresults>
+                <responseData>false</responseData>
+                <samplerData>false</samplerData>
+                <xml>false</xml>
+                <fieldNames>true</fieldNames>
+                <responseHeaders>false</responseHeaders>
+                <requestHeaders>false</requestHeaders>
+                <responseDataOnError>false</responseDataOnError>
+                <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+                <assertionsResultsToSave>0</assertionsResultsToSave>
+                <bytes>true</bytes>
+                <sentBytes>true</sentBytes>
+                <url>true</url>
+                <threadCounts>true</threadCounts>
+                <idleTime>true</idleTime>
+                <connectTime>true</connectTime>
+              </value>
+            </objProp>
+            <stringProp name="filename"></stringProp>
+          </ResultCollector>
+          <hashTree/>
+        </hashTree>
+        <GenericController guiclass="LogicControllerGui" testclass="GenericController" testname="Simple Controller"/>
+        <hashTree>
+          <JDBCSampler guiclass="TestBeanGUI" testclass="JDBCSampler" testname="SELECT SQL - Total Posts">
+            <stringProp name="dataSource">sqlserver</stringProp>
+            <stringProp name="query">SELECT COUNT(ID) FROM POSTS;</stringProp>
+            <stringProp name="queryArguments"></stringProp>
+            <stringProp name="queryArgumentsTypes"></stringProp>
+            <stringProp name="queryTimeout"></stringProp>
+            <stringProp name="queryType">Select Statement</stringProp>
+            <stringProp name="resultSetHandler">Store as String</stringProp>
+            <stringProp name="resultSetMaxRows"></stringProp>
+            <stringProp name="resultVariable"></stringProp>
+            <stringProp name="variableNames"></stringProp>
+          </JDBCSampler>
+          <hashTree/>
+          <JDBCSampler guiclass="TestBeanGUI" testclass="JDBCSampler" testname="SELECT SQL - Top 1000 Posts">
+            <stringProp name="dataSource">sqlserver</stringProp>
+            <stringProp name="queryType">Select Statement</stringProp>
+            <stringProp name="query">SELECT TOP 1000 * FROM POSTS p
+inner join PostTypes pt
+on p.PostTypeId = pt.Id
+inner join Users ou
+on p.OwnerUserId = ou.Id;</stringProp>
+            <stringProp name="queryArguments"></stringProp>
+            <stringProp name="queryArgumentsTypes"></stringProp>
+            <stringProp name="variableNames"></stringProp>
+            <stringProp name="resultVariable"></stringProp>
+            <stringProp name="queryTimeout"></stringProp>
+            <stringProp name="resultSetMaxRows"></stringProp>
+            <stringProp name="resultSetHandler">Store as String</stringProp>
+          </JDBCSampler>
+          <hashTree/>
+          <JDBCSampler guiclass="TestBeanGUI" testclass="JDBCSampler" testname="SELECT SQL - Top 100000 Posts">
+            <stringProp name="dataSource">sqlserver</stringProp>
+            <stringProp name="queryType">Select Statement</stringProp>
+            <stringProp name="query">SELECT TOP 100000 * FROM POSTS p
+inner join PostTypes pt
+on p.PostTypeId = pt.Id
+inner join Users ou
+on p.OwnerUserId = ou.Id;</stringProp>
+            <stringProp name="queryArguments"></stringProp>
+            <stringProp name="queryArgumentsTypes"></stringProp>
+            <stringProp name="variableNames"></stringProp>
+            <stringProp name="resultVariable"></stringProp>
+            <stringProp name="queryTimeout"></stringProp>
+            <stringProp name="resultSetMaxRows"></stringProp>
+            <stringProp name="resultSetHandler">Store as String</stringProp>
+          </JDBCSampler>
+          <hashTree/>
+          <JDBCSampler guiclass="TestBeanGUI" testclass="JDBCSampler" testname="SELECT SQL - Count All Anonymous POSTS">
+            <stringProp name="dataSource">sqlserver</stringProp>
+            <stringProp name="queryType">Select Statement</stringProp>
+            <stringProp name="query">SELECT count(p.id) FROM POSTS p
+inner join PostTypes pt
+on p.PostTypeId = pt.Id
+inner join Users ou
+on p.OwnerUserId = ou.Id
+WHERE p.OwnerUserId = 11
+
+--11 = Anonymous</stringProp>
+            <stringProp name="queryArguments"></stringProp>
+            <stringProp name="queryArgumentsTypes"></stringProp>
+            <stringProp name="variableNames"></stringProp>
+            <stringProp name="resultVariable"></stringProp>
+            <stringProp name="queryTimeout"></stringProp>
+            <stringProp name="resultSetMaxRows"></stringProp>
+            <stringProp name="resultSetHandler">Store as String</stringProp>
+          </JDBCSampler>
+          <hashTree/>
+          <JDBCSampler guiclass="TestBeanGUI" testclass="JDBCSampler" testname="SELECT SQL - All Anonymous POSTS">
+            <stringProp name="dataSource">sqlserver</stringProp>
+            <stringProp name="queryType">Select Statement</stringProp>
+            <stringProp name="query">SELECT p.* FROM POSTS p
+inner join PostTypes pt
+on p.PostTypeId = pt.Id
+inner join Users ou
+on p.OwnerUserId = ou.Id
+WHERE ou.id = 11
+
+--11 = Anonymous</stringProp>
+            <stringProp name="queryArguments"></stringProp>
+            <stringProp name="queryArgumentsTypes"></stringProp>
+            <stringProp name="variableNames"></stringProp>
+            <stringProp name="resultVariable"></stringProp>
+            <stringProp name="queryTimeout"></stringProp>
+            <stringProp name="resultSetMaxRows"></stringProp>
+            <stringProp name="resultSetHandler">Store as String</stringProp>
+          </JDBCSampler>
+          <hashTree/>
+          <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="SELECT MONGO - All Anonymous POSTS">
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="cacheKey">false</stringProp>
+            <stringProp name="script">import com.mongodb.MongoClient;
+import com.mongodb.MongoCredential;
+import com.mongodb.ServerAddress;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.MongoIterable;
+import com.mongodb.client.MongoCursor;
+import org.bson.Document;
+
+MongoCollection&lt;Document&gt; collection = vars.getObject(&quot;postsCollection&quot;);
+Document filter = new Document(&quot;ownerUserId&quot;, 11);
+
+// Query all documents from the collection using batching
+MongoIterable&lt;Document&gt; result = collection.find(filter);
+
+// Initialize list to store JSON strings representing documents
+List&lt;String&gt; resultList = new ArrayList&lt;&gt;();
+
+// Iterate over the cursor to retrieve documents in batches
+MongoCursor&lt;Document&gt; cursor = result.iterator();
+while (cursor.hasNext()) {
+    Document document = cursor.next();
+    resultList.add(document.toJson());
+}
+
+return resultList;</stringProp>
+          </JSR223Sampler>
+          <hashTree/>
+          <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="SELECT MONGO - Total Posts">
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="cacheKey">false</stringProp>
+            <stringProp name="script">import com.mongodb.client.MongoCollection;
+import org.bson.Document;
+
+MongoCollection&lt;Document&gt; collection = vars.getObject(&quot;postsCollection&quot;);
+
+long totalItems = collection.count();
+
+return totalItems;</stringProp>
+          </JSR223Sampler>
+          <hashTree/>
+          <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="SELECT MONGO - First 1000 Posts">
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="cacheKey">false</stringProp>
+            <stringProp name="script">import com.mongodb.MongoClient;
+import com.mongodb.MongoCredential;
+import com.mongodb.ServerAddress;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.MongoIterable;
+import com.mongodb.client.MongoCursor;
+import org.bson.Document;
+
+
+MongoCollection&lt;Document&gt; collection = vars.getObject(&quot;postsCollection&quot;);
+
+// Query all documents from the collection using batching
+MongoIterable&lt;Document&gt; result = collection.find().limit(1000);
+
+// Initialize list to store JSON strings representing documents
+List&lt;String&gt; resultList = new ArrayList&lt;&gt;();
+
+// Iterate over the cursor to retrieve documents in batches
+MongoCursor&lt;Document&gt; cursor = result.iterator();
+while (cursor.hasNext()) {
+    Document document = cursor.next();
+    resultList.add(document.toJson());
+}
+
+return resultList;</stringProp>
+          </JSR223Sampler>
+          <hashTree/>
+          <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="SELECT MONGO - First 100000 Posts">
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="cacheKey">false</stringProp>
+            <stringProp name="script">import com.mongodb.MongoClient;
+import com.mongodb.MongoCredential;
+import com.mongodb.ServerAddress;
+import com.mongodb.client.MongoCollection;
+import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.MongoIterable;
+import com.mongodb.client.MongoCursor;
+import org.bson.Document;
+
+MongoCollection&lt;Document&gt; collection = vars.getObject(&quot;postsCollection&quot;);
+
+// Query all documents from the collection using batching
+MongoIterable&lt;Document&gt; result = collection.find().limit(100000);
+
+// Initialize list to store JSON strings representing documents
+List&lt;String&gt; resultList = new ArrayList&lt;&gt;();
+
+// Iterate over the cursor to retrieve documents in batches
+MongoCursor&lt;Document&gt; cursor = result.iterator();
+while (cursor.hasNext()) {
+    Document document = cursor.next();
+    resultList.add(document.toJson());
+}
+
+return resultList;</stringProp>
+          </JSR223Sampler>
+          <hashTree/>
+          <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="SELECT MONGO - Count All Anonymous">
+            <stringProp name="scriptLanguage">groovy</stringProp>
+            <stringProp name="parameters"></stringProp>
+            <stringProp name="filename"></stringProp>
+            <stringProp name="cacheKey">false</stringProp>
+            <stringProp name="script">import com.mongodb.client.MongoCollection;
+import org.bson.Document;
+
+Document filter = new Document(&quot;ownerUserId&quot;, 11);
+MongoCollection&lt;Document&gt; collection = vars.getObject(&quot;postsCollection&quot;);
+long totalDocuments = collection.count(filter);
+return totalDocuments;</stringProp>
+          </JSR223Sampler>
+          <hashTree/>
+          <ResultCollector guiclass="RespTimeGraphVisualizer" testclass="ResultCollector" testname="Response Time Graph">
+            <boolProp name="ResultCollector.error_logging">false</boolProp>
+            <objProp>
+              <name>saveConfig</name>
+              <value class="SampleSaveConfiguration">
+                <time>true</time>
+                <latency>true</latency>
+                <timestamp>true</timestamp>
+                <success>true</success>
+                <label>true</label>
+                <code>true</code>
+                <message>true</message>
+                <threadName>true</threadName>
+                <dataType>true</dataType>
+                <encoding>false</encoding>
+                <assertions>true</assertions>
+                <subresults>true</subresults>
+                <responseData>false</responseData>
+                <samplerData>false</samplerData>
+                <xml>false</xml>
+                <fieldNames>true</fieldNames>
+                <responseHeaders>false</responseHeaders>
+                <requestHeaders>false</requestHeaders>
+                <responseDataOnError>false</responseDataOnError>
+                <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+                <assertionsResultsToSave>0</assertionsResultsToSave>
+                <bytes>true</bytes>
+                <sentBytes>true</sentBytes>
+                <url>true</url>
+                <threadCounts>true</threadCounts>
+                <idleTime>true</idleTime>
+                <connectTime>true</connectTime>
+              </value>
+            </objProp>
+            <stringProp name="filename"></stringProp>
+          </ResultCollector>
+          <hashTree/>
+          <ResultCollector guiclass="StatVisualizer" testclass="ResultCollector" testname="Aggregate Report">
+            <boolProp name="ResultCollector.error_logging">false</boolProp>
+            <objProp>
+              <name>saveConfig</name>
+              <value class="SampleSaveConfiguration">
+                <time>true</time>
+                <latency>true</latency>
+                <timestamp>true</timestamp>
+                <success>true</success>
+                <label>true</label>
+                <code>true</code>
+                <message>true</message>
+                <threadName>true</threadName>
+                <dataType>true</dataType>
+                <encoding>false</encoding>
+                <assertions>true</assertions>
+                <subresults>true</subresults>
+                <responseData>false</responseData>
+                <samplerData>false</samplerData>
+                <xml>false</xml>
+                <fieldNames>true</fieldNames>
+                <responseHeaders>false</responseHeaders>
+                <requestHeaders>false</requestHeaders>
+                <responseDataOnError>false</responseDataOnError>
+                <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+                <assertionsResultsToSave>0</assertionsResultsToSave>
+                <bytes>true</bytes>
+                <sentBytes>true</sentBytes>
+                <url>true</url>
+                <threadCounts>true</threadCounts>
+                <idleTime>true</idleTime>
+                <connectTime>true</connectTime>
+              </value>
+            </objProp>
+            <stringProp name="filename"></stringProp>
+          </ResultCollector>
+          <hashTree/>
+          <ResultCollector guiclass="StatGraphVisualizer" testclass="ResultCollector" testname="Aggregate Graph">
+            <boolProp name="ResultCollector.error_logging">false</boolProp>
+            <objProp>
+              <name>saveConfig</name>
+              <value class="SampleSaveConfiguration">
+                <time>true</time>
+                <latency>true</latency>
+                <timestamp>true</timestamp>
+                <success>true</success>
+                <label>true</label>
+                <code>true</code>
+                <message>true</message>
+                <threadName>true</threadName>
+                <dataType>true</dataType>
+                <encoding>false</encoding>
+                <assertions>true</assertions>
+                <subresults>true</subresults>
+                <responseData>false</responseData>
+                <samplerData>false</samplerData>
+                <xml>false</xml>
+                <fieldNames>true</fieldNames>
+                <responseHeaders>false</responseHeaders>
+                <requestHeaders>false</requestHeaders>
+                <responseDataOnError>false</responseDataOnError>
+                <saveAssertionResultsFailureMessage>true</saveAssertionResultsFailureMessage>
+                <assertionsResultsToSave>0</assertionsResultsToSave>
+                <bytes>true</bytes>
+                <sentBytes>true</sentBytes>
+                <url>true</url>
+                <threadCounts>true</threadCounts>
+                <idleTime>true</idleTime>
+                <connectTime>true</connectTime>
+              </value>
+            </objProp>
+            <stringProp name="filename"></stringProp>
+          </ResultCollector>
+          <hashTree/>
+        </hashTree>
+      </hashTree>
+    </hashTree>
+  </hashTree>
+</jmeterTestPlan>
