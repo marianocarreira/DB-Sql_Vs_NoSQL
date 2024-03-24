@@ -16,7 +16,7 @@
         <stringProp name="dataSource">sqlserver</stringProp>
         <stringProp name="dbUrl">jdbc:sqlserver://localhost:1433;databaseName=StackOverflow2010;encrypt=false;</stringProp>
         <stringProp name="driver">com.microsoft.sqlserver.jdbc.SQLServerDriver</stringProp>
-        <stringProp name="initQuery">delete posts where id &lt; 0</stringProp>
+        <stringProp name="initQuery"></stringProp>
         <boolProp name="keepAlive">true</boolProp>
         <stringProp name="password">elAdmin</stringProp>
         <stringProp name="poolMax">0</stringProp>
@@ -138,9 +138,9 @@ MongoCollection&lt;Document&gt; collection = database.getCollection(collectionNa
 
 vars.putObject(&quot;postsCollection&quot;, collection);
 
-def filter = Filters.lt(&quot;id&quot;, 0);
+// def filter = Filters.lt(&quot;id&quot;, 0);
 // Perform delete operation
-def deleteResult = collection.deleteMany(filter);
+// def deleteResult = collection.deleteMany(filter);
 
 return &quot;Connected&quot;;</stringProp>
         <stringProp name="scriptLanguage">groovy</stringProp>
@@ -159,7 +159,7 @@ return &quot;Connected&quot;;</stringProp>
       <hashTree>
         <OnceOnlyController guiclass="OnceOnlyControllerGui" testclass="OnceOnlyController" testname="Once Only Controller"/>
         <hashTree>
-          <JDBCSampler guiclass="TestBeanGUI" testclass="JDBCSampler" testname="INSERT SQL - 500000 Posts">
+          <JDBCSampler guiclass="TestBeanGUI" testclass="JDBCSampler" testname="INSERT SQL - 500000 Posts" enabled="true">
             <stringProp name="dataSource">sqlserver</stringProp>
             <stringProp name="queryType">Update Statement</stringProp>
             <stringProp name="query">-- Generate 1,000,000 rows of random data and insert into the &quot;Posts&quot; table
@@ -243,7 +243,7 @@ WHERE	lastEditorUserId IS NULL
             <stringProp name="resultSetHandler">Count Records</stringProp>
           </JDBCSampler>
           <hashTree/>
-          <JDBCSampler guiclass="TestBeanGUI" testclass="JDBCSampler" testname="DELETE SQL - 500000 Posts">
+          <JDBCSampler guiclass="TestBeanGUI" testclass="JDBCSampler" testname="DELETE SQL - 500000 Posts" enabled="true">
             <stringProp name="dataSource">sqlserver</stringProp>
             <stringProp name="queryType">Prepared Update Statement</stringProp>
             <stringProp name="query">DELETE	POSTS
@@ -441,7 +441,7 @@ for (int i = 0; i &lt; rowCount; i++) {
 </stringProp>
           </JSR223Sampler>
           <hashTree/>
-          <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="UPDATE MONGO - 500000 Posts">
+          <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="UPDATE MONGO - 500000 Posts" enabled="true">
             <stringProp name="scriptLanguage">groovy</stringProp>
             <stringProp name="parameters"></stringProp>
             <stringProp name="filename"></stringProp>
@@ -468,7 +468,7 @@ Bson update = Updates.set(&quot;lastEditorUserId&quot;, 11);
 def updateResult = collection.updateMany(filter, update);</stringProp>
           </JSR223Sampler>
           <hashTree/>
-          <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="DELETE MONGO - 500000 Posts ">
+          <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="DELETE MONGO - 500000 Posts " enabled="true">
             <stringProp name="scriptLanguage">groovy</stringProp>
             <stringProp name="parameters"></stringProp>
             <stringProp name="filename"></stringProp>
@@ -647,7 +647,7 @@ on p.OwnerUserId = ou.Id;</stringProp>
             <stringProp name="resultSetHandler">Store as String</stringProp>
           </JDBCSampler>
           <hashTree/>
-          <JDBCSampler guiclass="TestBeanGUI" testclass="JDBCSampler" testname="SELECT SQL - Count All Anonymous POSTS">
+          <JDBCSampler guiclass="TestBeanGUI" testclass="JDBCSampler" testname="SELECT SQL - Count All Anonymous POSTS" enabled="true">
             <stringProp name="dataSource">sqlserver</stringProp>
             <stringProp name="queryType">Select Statement</stringProp>
             <stringProp name="query">SELECT count(p.id) FROM POSTS p
@@ -667,7 +667,7 @@ WHERE p.OwnerUserId = 11
             <stringProp name="resultSetHandler">Store as String</stringProp>
           </JDBCSampler>
           <hashTree/>
-          <JDBCSampler guiclass="TestBeanGUI" testclass="JDBCSampler" testname="SELECT SQL - All Anonymous POSTS">
+          <JDBCSampler guiclass="TestBeanGUI" testclass="JDBCSampler" testname="SELECT SQL - All Anonymous POSTS" enabled="true">
             <stringProp name="dataSource">sqlserver</stringProp>
             <stringProp name="queryType">Select Statement</stringProp>
             <stringProp name="query">SELECT p.* FROM POSTS p
@@ -687,7 +687,7 @@ WHERE ou.id = 11
             <stringProp name="resultSetHandler">Store as String</stringProp>
           </JDBCSampler>
           <hashTree/>
-          <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="SELECT MONGO - All Anonymous POSTS">
+          <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="SELECT MONGO - All Anonymous POSTS" enabled="true">
             <stringProp name="scriptLanguage">groovy</stringProp>
             <stringProp name="parameters"></stringProp>
             <stringProp name="filename"></stringProp>
@@ -735,7 +735,7 @@ long totalItems = collection.count();
 return totalItems;</stringProp>
           </JSR223Sampler>
           <hashTree/>
-          <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="SELECT MONGO - First 1000 Posts">
+          <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="SELECT MONGO - First 1000 Posts" enabled="true">
             <stringProp name="scriptLanguage">groovy</stringProp>
             <stringProp name="parameters"></stringProp>
             <stringProp name="filename"></stringProp>
@@ -768,7 +768,7 @@ while (cursor.hasNext()) {
 return resultList;</stringProp>
           </JSR223Sampler>
           <hashTree/>
-          <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="SELECT MONGO - First 100000 Posts">
+          <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="SELECT MONGO - First 100000 Posts" enabled="true">
             <stringProp name="scriptLanguage">groovy</stringProp>
             <stringProp name="parameters"></stringProp>
             <stringProp name="filename"></stringProp>
@@ -800,7 +800,7 @@ while (cursor.hasNext()) {
 return resultList;</stringProp>
           </JSR223Sampler>
           <hashTree/>
-          <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="SELECT MONGO - Count All Anonymous">
+          <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="SELECT MONGO - Count All Anonymous" enabled="true">
             <stringProp name="scriptLanguage">groovy</stringProp>
             <stringProp name="parameters"></stringProp>
             <stringProp name="filename"></stringProp>
