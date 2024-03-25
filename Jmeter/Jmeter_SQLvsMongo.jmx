@@ -152,14 +152,14 @@ return &quot;Connected&quot;;</stringProp>
         <boolProp name="ThreadGroup.same_user_on_next_iteration">true</boolProp>
         <stringProp name="ThreadGroup.on_sample_error">stoptestnow</stringProp>
         <elementProp name="ThreadGroup.main_controller" elementType="LoopController" guiclass="LoopControlPanel" testclass="LoopController" testname="Loop Controller">
-          <stringProp name="LoopController.loops">5</stringProp>
+          <stringProp name="LoopController.loops">1</stringProp>
           <boolProp name="LoopController.continue_forever">false</boolProp>
         </elementProp>
       </ThreadGroup>
       <hashTree>
-        <OnceOnlyController guiclass="OnceOnlyControllerGui" testclass="OnceOnlyController" testname="Once Only Controller"/>
+        <OnceOnlyController guiclass="OnceOnlyControllerGui" testclass="OnceOnlyController" testname="Once Only Controller" enabled="false"/>
         <hashTree>
-          <JDBCSampler guiclass="TestBeanGUI" testclass="JDBCSampler" testname="INSERT SQL - 500000 Posts" enabled="true">
+          <JDBCSampler guiclass="TestBeanGUI" testclass="JDBCSampler" testname="INSERT SQL - 500000 Posts">
             <stringProp name="dataSource">sqlserver</stringProp>
             <stringProp name="queryType">Update Statement</stringProp>
             <stringProp name="query">-- Generate 1,000,000 rows of random data and insert into the &quot;Posts&quot; table
@@ -243,7 +243,7 @@ WHERE	lastEditorUserId IS NULL
             <stringProp name="resultSetHandler">Count Records</stringProp>
           </JDBCSampler>
           <hashTree/>
-          <JDBCSampler guiclass="TestBeanGUI" testclass="JDBCSampler" testname="DELETE SQL - 500000 Posts" enabled="true">
+          <JDBCSampler guiclass="TestBeanGUI" testclass="JDBCSampler" testname="DELETE SQL - 500000 Posts">
             <stringProp name="dataSource">sqlserver</stringProp>
             <stringProp name="queryType">Prepared Update Statement</stringProp>
             <stringProp name="query">DELETE	POSTS
@@ -292,6 +292,9 @@ WHERE	id &lt; 0</stringProp>
               </value>
             </objProp>
             <stringProp name="filename"></stringProp>
+            <boolProp name="ResultCollector.success_only_logging">true</boolProp>
+            <stringProp name="RespTimeGraph.graphtitle">Response Time Graph</stringProp>
+            <stringProp name="RespTimeGraph.interval">20000</stringProp>
           </ResultCollector>
           <hashTree/>
           <ResultCollector guiclass="StatVisualizer" testclass="ResultCollector" testname="Aggregate Report">
@@ -369,7 +372,7 @@ WHERE	id &lt; 0</stringProp>
           </ResultCollector>
           <hashTree/>
         </hashTree>
-        <OnceOnlyController guiclass="OnceOnlyControllerGui" testclass="OnceOnlyController" testname="Once Only Controller"/>
+        <OnceOnlyController guiclass="OnceOnlyControllerGui" testclass="OnceOnlyController" testname="Once Only Controller" enabled="false"/>
         <hashTree>
           <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="INSERT MONGO - 500000  Posts">
             <stringProp name="scriptLanguage">groovy</stringProp>
@@ -523,7 +526,7 @@ def deleteResult = collection.deleteMany(filter);
             <stringProp name="filename"></stringProp>
           </ResultCollector>
           <hashTree/>
-          <ResultCollector guiclass="StatGraphVisualizer" testclass="ResultCollector" testname="Aggregate Graph">
+          <ResultCollector guiclass="StatVisualizer" testclass="ResultCollector" testname="Aggregate Report">
             <boolProp name="ResultCollector.error_logging">false</boolProp>
             <objProp>
               <name>saveConfig</name>
@@ -613,7 +616,7 @@ def deleteResult = collection.deleteMany(filter);
             <stringProp name="variableNames"></stringProp>
           </JDBCSampler>
           <hashTree/>
-          <JDBCSampler guiclass="TestBeanGUI" testclass="JDBCSampler" testname="SELECT SQL - Top 1000 Posts">
+          <JDBCSampler guiclass="TestBeanGUI" testclass="JDBCSampler" testname="SELECT SQL - Top 1000 Posts" enabled="true">
             <stringProp name="dataSource">sqlserver</stringProp>
             <stringProp name="queryType">Select Statement</stringProp>
             <stringProp name="query">SELECT TOP 1000 * FROM POSTS p
@@ -630,7 +633,7 @@ on p.OwnerUserId = ou.Id;</stringProp>
             <stringProp name="resultSetHandler">Store as String</stringProp>
           </JDBCSampler>
           <hashTree/>
-          <JDBCSampler guiclass="TestBeanGUI" testclass="JDBCSampler" testname="SELECT SQL - Top 100000 Posts">
+          <JDBCSampler guiclass="TestBeanGUI" testclass="JDBCSampler" testname="SELECT SQL - Top 100000 Posts" enabled="true">
             <stringProp name="dataSource">sqlserver</stringProp>
             <stringProp name="queryType">Select Statement</stringProp>
             <stringProp name="query">SELECT TOP 100000 * FROM POSTS p
@@ -720,7 +723,7 @@ while (cursor.hasNext()) {
 return resultList;</stringProp>
           </JSR223Sampler>
           <hashTree/>
-          <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="SELECT MONGO - Total Posts">
+          <JSR223Sampler guiclass="TestBeanGUI" testclass="JSR223Sampler" testname="SELECT MONGO - Total Posts" enabled="true">
             <stringProp name="scriptLanguage">groovy</stringProp>
             <stringProp name="parameters"></stringProp>
             <stringProp name="filename"></stringProp>
@@ -849,6 +852,7 @@ return totalDocuments;</stringProp>
               </value>
             </objProp>
             <stringProp name="filename"></stringProp>
+            <boolProp name="ResultCollector.success_only_logging">true</boolProp>
           </ResultCollector>
           <hashTree/>
           <ResultCollector guiclass="StatVisualizer" testclass="ResultCollector" testname="Aggregate Report">
